@@ -4,9 +4,9 @@ import minisplit
 
 class TestMinisplit(unittest.TestCase):
 
-  def test_cooling(self):
+  def test_on(self):
     ms = minisplit.Minisplit()
-    self.assertTrue(ms.turn_cooling())
+    self.assertTrue(ms.turn_on())
 
   def test_off(self):
     ms = minisplit.Minisplit()

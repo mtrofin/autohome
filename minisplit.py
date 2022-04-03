@@ -12,23 +12,20 @@ from typing import List
 @gin.configurable
 class Minisplit(device.Device):
 
-  def __init__(self, cool_cmd:bytes, off_cmd:bytes, schedule:List[int]):
+  def __init__(self, on_cmd:bytes, off_cmd:bytes, schedule:List[int]):
     super(Minisplit, self).__init__('minisplit')
-    self._cool_cmd = cool_cmd
+    self._on_cmd = on_cmd
     self._off_cmd = off_cmd
     self._device = broadlink.discover()[0]
     self._device.auth()
     self._schedule = schedule
 
-  def turn_cooling(self):
-    self._device.send_data(self._cool_cmd)
+  def turn_on(self):
+    self._device.send_data(self._on_cmd)
     return True
 
   def turn_off(self):
     return self._device.send_data(self._off_cmd)
-    
-  def turn_on(self):
-    return self.turn_cooling()
   
   def should_be_on(self):
     return datetime.datetime.now().hour in self._schedule
