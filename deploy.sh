@@ -1,3 +1,3 @@
 # !/bin/bash
-mkdir ../autohome-install
+mkdir -p ../autohome-install
 cp -rf * ../autohome-install/
