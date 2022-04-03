@@ -1,5 +1,5 @@
 import unittest
-import assistant
+import thermostat
 
 
 # This is not quite a test, it's rather a utility that checks a user's config
@@ -10,11 +10,11 @@ import assistant
 class TestAssistant(unittest.TestCase):
 
   def test_turn_on(self):
-    a = assistant.Assistant()
+    a = thermostat.Thermostat()
     self.assertTrue(a.turn_on())
 
   def test_turn_off(self):
-    a = assistant.Assistant()
+    a = thermostat.Thermostat()
     self.assertTrue(a.turn_off())
 
 if __name__ == '__main__':

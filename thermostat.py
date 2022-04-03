@@ -11,10 +11,10 @@ import os
 from pathlib import Path
 
 @gin.configurable
-class Assistant(device.Device):
+class Thermostat(device.Device):
 
   def __init__(self, url:str, username:str):
-    super(Assistant, self).__init__('assistant')
+    super(Thermostat, self).__init__('thermostat')
     self._url = url
     self._username = username
 
@@ -35,4 +35,4 @@ class Assistant(device.Device):
     return self._tell(command='Turn on all thermostats')
 
 
-gin.parse_config_file(os.path.join(str(Path.home()), '.autohome/assistant.gin'))
+gin.parse_config_file(os.path.join(str(Path.home()), '.autohome/thermostat.gin'))
