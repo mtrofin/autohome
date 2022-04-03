@@ -7,13 +7,15 @@ import assistant
 # First, create a ~/.autohome/assistant.json file, see assistant.py for
 # structure.
 # Then, run the test.
-class TestPowerwall(unittest.TestCase):
+class TestAssistant(unittest.TestCase):
 
   def test_turn_on(self):
-    self.assertTrue(assistant.turn_on(assistant.DEFAULT_CFG_FILE))
+    a = assistant.Assistant()
+    self.assertTrue(a.turn_on())
 
   def test_turn_off(self):
-    self.assertTrue(assistant.turn_off(assistant.DEFAULT_CFG_FILE))
+    a = assistant.Assistant()
+    self.assertTrue(a.turn_off())
 
 if __name__ == '__main__':
   unittest.main()
