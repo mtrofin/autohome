@@ -1,3 +1,15 @@
+""" Detect grid status via Powerwall support.
+
+Create a ~/.autohome/powerwall.json config;
+{
+  "url":"<the powerwall url, e.g. https://powerwall>",
+  "username":"<your email>",
+  "password":"<password>"
+}
+
+Where the username and password are those set up as user (not installer) through
+the powerwall internal web interface.
+"""
 import json
 import os
 
@@ -9,13 +21,6 @@ from absl import flags
 
 # We use the global for test - vscode's python support doesn't quite understand
 # absltest, so we avoid needing to init the flags this way.
-
-# The config json has a structure like so:
-# {
-#   "url":"<the powerwall url, e.g. https://powerwall>",
-#   "username":"<your email>",
-#   "password":"<password>"
-# }
 DEFAULT_CFG_FILE = os.path.join(str(Path.home()), '.autohome/powerwall.json')
 _CFG = flags.DEFINE_string(
     'powerwall_config', DEFAULT_CFG_FILE, 'configuration for powerwall')
