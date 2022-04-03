@@ -10,11 +10,11 @@ import thermostat
 class TestAssistant(unittest.TestCase):
 
   def test_turn_on(self):
-    a = thermostat.Thermostat()
+    a = thermostat.Assistant()
     self.assertTrue(a.turn_on())
 
   def test_turn_off(self):
-    a = thermostat.Thermostat()
+    a = thermostat.Assistant()
     self.assertTrue(a.turn_off())
 
 if __name__ == '__main__':

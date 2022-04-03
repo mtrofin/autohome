@@ -7,12 +7,12 @@ import gin
 import os
 
 from pathlib import Path
-
+from typing import List
 
 @gin.configurable
 class Minisplit(device.Device):
 
-  def __init__(self, cool_cmd, off_cmd, schedule):
+  def __init__(self, cool_cmd:bytes, off_cmd:bytes, schedule:List[int]):
     super(Minisplit, self).__init__('minisplit')
     self._cool_cmd = cool_cmd
     self._off_cmd = off_cmd
