@@ -3,17 +3,18 @@
 Get and install Assistant Relay (https://assistantrelay.com)
 
 """
+import device
 import gin
 import requests
 import os
 
 from pathlib import Path
 
-
 @gin.configurable
-class Assistant:
+class Assistant(device.Device):
 
   def __init__(self, url:str, username:str):
+    super(Assistant, self).__init__('assistant')
     self._url = url
     self._username = username
 
@@ -29,7 +30,7 @@ class Assistant:
 
   def turn_off(self):
     return self._tell(command='Turn off all thermostats')
-
+      
   def turn_on(self):
     return self._tell(command='Turn on all thermostats')
 
