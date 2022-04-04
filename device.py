@@ -62,7 +62,7 @@ class Device:
     return self._turn_off_impl()
 
   @abstractmethod
-  def turn_off(self)->bool:
+  def turn_on(self)->bool:
     ...
 
   @abstractmethod
