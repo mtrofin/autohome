@@ -1,12 +1,20 @@
 from abc import abstractmethod
 import syslog
-import status
+import os
+from pathlib import Path
+
 
 DEBUG = syslog.LOG_DEBUG
 ERROR = syslog.LOG_ERR
+STATUS_DIR = os.path.join(str(Path.home()), '.autohome/status')
 
 def _no_log(level, msg, *args, **kwargs):
   pass
+
+
+def _get_cfg_path(config_name:str):
+  return os.path.join(STATUS_DIR, config_name)
+
 
 class Device:
 
@@ -18,13 +26,22 @@ class Device:
     self._logger(level, '[{0}]: {1}'.format(self._name, msg), *args, **kwargs)  
 
   def _get_last_status(self):
-    retval = status.get_status(self._name)
-    self._logger(DEBUG, 'last status is: {0}'.format(retval))
-    return retval
+    p = _get_cfg_path(self._name)
+    last_status = None
+    if os.path.exists(p):      
+      with open(p) as f:
+        stat = f.readline()
+        last_status = (stat == 'True')
+    self.log(DEBUG, 'last status is: {0}'.format(last_status))
+    return last_status
 
-  def _set_status(self, v:bool):
-    self._logger(DEBUG, 'setting status: {0}'.format(v))
-    status.set_status(self._name, v)
+  def _set_status(self, v:bool):    
+    self.log(DEBUG, 'setting status: {0}'.format(v))
+    fname = _get_cfg_path(self._name)
+    os.makedirs(os.path.dirname(fname), exist_ok=True)
+    with open(fname, 'w') as f:
+      f.writelines([str(v)])
+
 
   def _turn_off_impl(self):
     self.log(DEBUG, 'telling device to switch off')
