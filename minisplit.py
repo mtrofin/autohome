@@ -21,11 +21,18 @@ class Minisplit(device.Device):
     self._schedule = schedule
 
   def turn_on(self):
-    self._device.send_data(self._on_cmd)
-    return True
+    try:
+      self._device.send_data(self._on_cmd)
+      return True
+    except:
+      return False
 
   def turn_off(self):
-    return self._device.send_data(self._off_cmd)
+    try:
+      self._device.send_data(self._off_cmd)
+      return True
+    except:
+      return False
   
   def should_be_on(self):
     return datetime.datetime.now().hour in self._schedule
