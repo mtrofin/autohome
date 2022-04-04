@@ -11,7 +11,8 @@ def get_status(config_name:str):
   if not os.path.exists(p):
     return None
   with open(p) as f:
-    return bool(f.readline())
+    stat = f.readline()
+    return stat == 'True'
 
 def set_status(config_name:str, v:bool):
   fname = get_cfg_path(config_name)

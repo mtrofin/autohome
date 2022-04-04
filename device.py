@@ -37,14 +37,14 @@ class Device:
 
   def power_is_on(self):
     self.log(DEBUG, 'power is on')
-    s = self._get_last_status()
+    last_status = self._get_last_status()
     should_be_on = self.should_be_on()
     self.log(DEBUG, 'schedule says: {0}'.format(should_be_on))
-    if not should_be_on:
-      return self._turn_off_impl()
-    if s and should_be_on:
-      self.log(DEBUG, 'device is already on, doing nothing')
+    if last_status == should_be_on:
+      self.log(DEBUG, 'device is already set correctly, doing nothing')
       return True
+    if not should_be_on and last_status:
+      return self._turn_off_impl()
     assert should_be_on
     if self.turn_on():
       self.log(DEBUG, 'turned device on')
