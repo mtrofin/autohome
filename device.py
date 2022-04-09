@@ -58,7 +58,9 @@ class Device:
     should_be_on = self.should_be_on()
     self.log(DEBUG, 'schedule says: {0}'.format(should_be_on))
     if last_status == should_be_on:
-      self.log(DEBUG, 'device is already set correctly, doing nothing')
+      self.log(DEBUG, 'device is already set correctly')
+      if self.time_tick():
+        self.log(DEBUG, 'device made a schedule-based change')
       return True
     if not should_be_on and last_status:
       return self._turn_off_impl()
@@ -85,6 +87,10 @@ class Device:
   @abstractmethod
   def turn_off(self)->bool:
     ...
+
+  @abstractmethod
+  def time_tick(self)->bool:
+    return False
 
   def should_be_on(self)->bool:
     return True

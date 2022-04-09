@@ -34,13 +34,13 @@ class Minisplit(device.Device):
     self._schedule = schedule
     self._mixed_mode_heating_period = mixed_mode_heating_period
 
-  def _get_on_cmd(self):
+  def _get_on_cmd(self, hr=datetime.datetime.now().hour):
     if self._mode == Mode.Heat or \
             (self._mode == Mode.Mixed and \
-             (datetime.datetime.now().hour in self._mixed_mode_heating_period)):
+             (hr in self._mixed_mode_heating_period)):
       return self._heating_cmd
     return self._cooling_cmd
-    
+
   def turn_on(self):
     try:
       self._device.send_data(self._get_on_cmd())
@@ -58,6 +58,12 @@ class Minisplit(device.Device):
   def should_be_on(self):
     return datetime.datetime.now().hour in self._schedule
 
+  def time_tick(self):
+    hr = datetime.datetime.now().hour
+    if self._get_on_cmd(hr=hr-1) != self._get_on_cmd(hr=hr):
+      self.turn_on()
+      return True
+    return False
 
 gin.parse_config_file(os.path.join(
     str(Path.home()), '.autohome/broadlink_cfg.gin'))
