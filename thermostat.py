@@ -29,10 +29,10 @@ class Thermostat(device.Device):
     return response.ok
 
   def turn_off(self):
-    return self._tell(command='Turn off all thermostats')
+    return self._tell(command='set all thermostats to off')
       
   def turn_on(self):
-    return self._tell(command='Turn on all thermostats')
+    return self._tell(command='set all thermostats to on')
 
 
 gin.parse_config_file(os.path.join(str(Path.home()), '.autohome/thermostat.gin'))
